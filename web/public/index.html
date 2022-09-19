@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    
+
+    <!-- <script>
+      setTimeout(() => {
+        Venus.api.account({
+        "addresses": "0x852291C8E89fCca7E97c43243670d1fEeb5d9d35",
+        "network": "mainnet"
+      }).then(a => {
+        debugger
+      }).catch( a=>{
+        debugger
+      })  
+      }, 1000);
+      
+      function check(e) {
+        fetch("/api/isAddress?address=" + $("#i1").val())
+          .then((x) => x.json())
+          .then(alert);
+      }
+      const task = async () => {
+         fetch("/api/accountV2")
+          .then((x) => x.json())
+          .then(([x, x2, x3, x4]) => {
+            $("#p").text(x);
+            $("#p2").text(`${x * 6}`);
+            $("#p2-1").text(x3);
+            $("#p2-2").text(x4);
+            $("#p8").text(x2);
+            $("#p9").text(Number(x) / Number(x2));
+          });
+
+         fetch("/api/ergPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p3").text(x);
+          });
+         fetch("/api/btcPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p4").text(x);
+          });
+         fetch("/api/adaInfo")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p5").text(x);
+          });
+         fetch("/api/depPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p6").text(x);
+          });
+         fetch("/api/ethPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p7").text(x);
+          });
+         fetch("/api/srmPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p10").text(x);
+          });
+         fetch("/api/bananaPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p11").text(x);
+          });
+         fetch("/api/kishuPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p12").text(Number(x) * 1e9);
+          }).catch(x => {})
+         fetch("/api/adaxPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p13").text(x);
+          }).catch(x => {})
+         fetch("/api/algoPrice")
+          .then((x) => x.text())
+          .then((x) => {
+            $("#p14").text(x);
+          });
+         fetch("/api/venusRatio")
+          .then((x) => x.json())
+          .then((x) => {
+            $("#p17").text(x);
+          });
+         fetch("/api/wildPrice")
+          .then((x) => x.json())
+          .then((x) => {
+            $("#p20").text(x);
+          });
+         fetch("/api/price/XVS")
+          .then((x) => x.json())
+          .then((x) => {
+            $("#p21").text(x);
+          });
+         fetch("/api/price/HT")
+          .then((x) => x.json())
+          .then((x) => {
+            $("#ht").text(x);
+          });
+         fetch("/api/price/RNDR")
+          .then((x) => x.json())
+          .then((x) => {
+            $("#rndr").text(x);
+          });
+         fetch("/api/price/BNB")
+          .then((x) => x.json())
+          .then((x) => {
+            $("#bnb").text(x);
+          });
+         Promise.all([
+          fetch("/api/okex-price/GM").then((x) => x.json()),
+          fetch("/api/price/GM").then((x) => x.json())
+        ]).then((x) => {
+          $("#gm").text(`ok: ${x[0]}, mxc: ${x[1]}`);
+        })
+         fetch("/api/kucoinInterest")
+          .then((x) => x.json())
+          .then((x) => {
+            $("#kucoinInterest").text(x);
+          });
+      };
+      fetch('/api/binanceContractPremium')
+        .then((x) => x.json())
+        .then(([season, perp]) => {
+          $('#binance-contract-season').text(season)
+          $('#binance-contract-perp').text(perp)
+        })
+
+      Chart.defaults.color = 'black'
+      fetch("/api/fundingRates")
+        .then((x) => x.json())
+        .then((x) => {
+            const colorMap = [
+                '#4810f5',
+                '#17c9c9',
+                '#c4f42c',
+                "#69a69f",
+                "#18cb2f",
+                "#ef46e2",
+                "#578bac",
+                "#d0a781",
+                "#a1a781",
+            ]
+          debugger
+            
+          const data = {
+            labels: _.range(0, 40),
+            datasets: x.map((x, index) => ({
+                label: x[0],
+                backgroundColor: colorMap[index],
+                borderColor: colorMap[index],
+                data: x[1].slice(60).map((x) => Number(x) * 10000),
+            }))
+          };
+          const config = {
+            type: "line",
+            data: data,
+            options: {},
+          };
+          var myChart = new Chart(document.getElementById("16"), config);
+        });
+
+      fetch("/api/adaIncomeInfo")
+        .then((x) => x.json())
+        .then(([sum, list, list2]) => {
+          const labels = list.map((_, i) => i);
+          const data = {
+            labels: labels,
+            datasets: [
+              {
+                label: "ADA资金费",
+                backgroundColor: "rgb(255, 99, 132)",
+                borderColor: "rgb(255, 99, 132)",
+                data: list,
+              },
+              {
+                label: "ADA资金费（累加）",
+                backgroundColor: "orange",
+                borderColor: "orange",
+                data: list2,
+              },
+            ],
+          };
+          const config = {
+            type: "line",
+            data: data,
+            options: {},
+          };
+          
+          var myChart = new Chart(document.getElementById("15"), config);
+          $("#p15").text(x);
+        });
+
+
+        fetch("/api/portfolio")
+        .then((x) => x.json())
+        .then((list) => {
+          const colorMap = [
+              '#4810f5',
+              '#17c9c9',
+              '#c4f42c',
+              "#69a69f",
+              "#18cb2f",
+              "#ef46e2",
+              "#578bac",
+              "#d0a781"
+            ]
+          const labels = list.map(x => `${x[0]}[${x[3]}]`);
+          const data = {
+            labels: labels,
+            datasets: [
+              {
+                label: "ADA资金费",
+                backgroundColor: colorMap.slice(0, list.length),
+                borderColor: colorMap.slice(0, list.length),
+                data: list.map(x => x[2]),
+              },
+            ],
+          };
+          const config = {
+            type: "pie",
+            data: data,
+            options: {},
+          };
+          
+          var myChart = new Chart(document.getElementById("17"), config);
+          const sum = list.reduce((acc, cur) => acc + Number(cur[2]), 0);
+          $("#p18").text(sum);
+        });
+
+      task();
+      setInterval(task, 30 * 1000);
+    </script> -->
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
