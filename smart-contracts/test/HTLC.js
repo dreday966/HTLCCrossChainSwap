@@ -6,17 +6,8 @@ const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
 const { expect } = require("chai");
 
 describe("Lock", function () {
-  // We define a fixture to reuse the same setup in every test.
-  // We use loadFixture to run this setup once, snapshot that state,
-  // and reset Hardhat Network to that snapshot in every test.
-  async function deployOneYearLockFixture() {
-    // const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-    // const ONE_GWEI = 1_000_000_000;
-
-    // const lockedAmount = ONE_GWEI;
-    // const unlockTime = (await time.latest()) + ONE_YEAR_IN_SECS;
-
-    // Contracts are deployed using the first signer/account by default
+  
+  async function deployHTLCFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
 
     const Htlc = await ethers.getContractFactory("HTLC");
@@ -31,18 +22,9 @@ describe("Lock", function () {
     return { token, nft, htlc, owner, otherAccount };
   }
 
-  // async function deployToken() {
-  //   const [owner, otherAccount] = await ethers.getSigners();
-
-  //   const Token = await ethers.getContractFactory("TestToken");
-  //   const token = await Token.deploy();
-
-  //   return { token, owner, otherAccount };
-  // }
-
   describe("LockETH", function () {
     it("refund immediatelly should fail", async function () {
-      const { htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000) 
@@ -50,7 +32,7 @@ describe("Lock", function () {
       await expect(htlc.refundETH()).to.be.reverted;
     });
     it("refund in 61s should success", async function () {
-      const { htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000) 
@@ -59,7 +41,7 @@ describe("Lock", function () {
       await expect(htlc.refundETH()).not.to.be.reverted;
     });
     it("withdaw with wrong r should fail", async function () {
-      const { htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const notR = "0x123456"
       const hash = ethers.utils.keccak256(r)
@@ -68,7 +50,7 @@ describe("Lock", function () {
       await expect(htlc.withdrawETH(notR)).to.be.reverted;
     });
     it("withdaw with right r should success", async function () {
-      const { htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000) 
@@ -79,7 +61,7 @@ describe("Lock", function () {
 
   describe("LockToken", function () {
     it("refund immediatelly should fail", async function () {
-      const { htlc, otherAccount, token } = await loadFixture(deployOneYearLockFixture);
+      const { htlc, otherAccount, token } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000)
@@ -88,7 +70,7 @@ describe("Lock", function () {
       await expect(htlc.refundToken()).to.be.reverted;
     });
     it("refund in 61s should success", async function () {
-      const { token, htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { token, htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000) 
@@ -98,7 +80,7 @@ describe("Lock", function () {
       await expect(htlc.refundToken()).not.to.be.reverted;
     });
     it("withdaw with wrong r should fail", async function () {
-      const { token, htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { token, htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const notR = "0x123456"
       const hash = ethers.utils.keccak256(r)
@@ -108,7 +90,7 @@ describe("Lock", function () {
       await expect(htlc.withdrawToken(notR)).to.be.reverted;
     });
     it("withdaw with right r should success", async function () {
-      const { token, htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { token, htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000) 
@@ -120,7 +102,7 @@ describe("Lock", function () {
 
   describe("LockNFT", function () {
     it("refund immediatelly should fail", async function () {
-      const { htlc, otherAccount, nft } = await loadFixture(deployOneYearLockFixture);
+      const { htlc, otherAccount, nft } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000)
@@ -129,7 +111,7 @@ describe("Lock", function () {
       await expect(htlc.refundNFT()).to.be.reverted;
     });
     it("refund in 61s should success", async function () {
-      const { nft, htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { nft, htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000) 
@@ -139,7 +121,7 @@ describe("Lock", function () {
       await expect(htlc.refundNFT()).not.to.be.reverted;
     });
     it("withdaw with wrong r should fail", async function () {
-      const { nft, htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { nft, htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const notR = "0x123456"
       const hash = ethers.utils.keccak256(r)
@@ -149,7 +131,7 @@ describe("Lock", function () {
       await expect(htlc.withdrawNFT(notR)).to.be.reverted;
     });
     it("withdaw with right r should success", async function () {
-      const { nft, htlc, otherAccount } = await loadFixture(deployOneYearLockFixture);
+      const { nft, htlc, otherAccount } = await loadFixture(deployHTLCFixture);
       const r = "0x1234"
       const hash = ethers.utils.keccak256(r)
       const now = Math.round(Date.now()/1000) 
