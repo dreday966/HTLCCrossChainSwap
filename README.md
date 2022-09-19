@@ -32,7 +32,7 @@ npx hardhat test
 ```
 
 ## Comunication Server
-/sevrer folder contains a nodejs server for communication between players. Run the following commands to start the server.
+/server folder contains a nodejs server for communication between players. Run the following commands to start the server.
 
 ```
 cd server
@@ -52,4 +52,4 @@ npm start
 ## How to run the demo
 1. Run client web and communication server.
 2. Open http://localhost:3008 on two separate web browsers with metamask installed
-3. Toggle network of metamask to Ropsten for one browser and Rinkeby for another.
+3. Toggle the network of metamask to Ropsten for one browser and Rinkeby for another.
